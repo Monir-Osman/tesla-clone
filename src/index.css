@@ -8,6 +8,7 @@
 body {
   width: 100%;
   overflow-x: hidden;
+  text-align: center;
 }
 
 @keyframes animateDown {
@@ -35,4 +36,17 @@ body {
     -moz-transform: translateY(3px);
     -webkit-transform: translateY(3px);
   }
+}
+
+ul {
+  list-style: none;
+}
+li {
+  display: inline;
+  padding: 0 10px;
+}
+a {
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
 }

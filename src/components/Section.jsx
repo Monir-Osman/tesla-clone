@@ -1,18 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import Fade from "react-reveal/Fade";
 
-function Section({ title, description, leftBtnText, rightBtnText }) {
+function Section({ title, description, leftBtnText, rightBtnText, backgroundImg }) {
   return (
-    <Wrap>
-      <ItemText>
-        <h1>{title}</h1>
-        <p style={{ padding: `20px` }}>{description}</p>
-      </ItemText>
+    <Wrap bgImage={backgroundImg}>
+      <Fade bottom>
+        <ItemText>
+          <h1>{title}</h1>
+          <p style={{ padding: `20px` }}>{description}</p>
+        </ItemText>
+      </Fade>
       <Buttons>
-        <ButtonContainer>
-          <LeftButton>{leftBtnText}</LeftButton>
-          <RightButton>{rightBtnText}</RightButton>
-        </ButtonContainer>
+        <Fade bottom>
+          <ButtonContainer>
+            <LeftButton>{leftBtnText}</LeftButton>
+            {rightBtnText && <RightButton>{rightBtnText}</RightButton>}
+          </ButtonContainer>
+        </Fade>
+
         <DownArrow src="/images/down-arrow.svg"></DownArrow>
       </Buttons>
     </Wrap>
@@ -24,8 +30,6 @@ export default Section;
 const Wrap = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(180deg, rgba(250, 250, 250, 0) 80%, #000000 110%),
-    url("/images/model-3.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -34,7 +38,8 @@ const Wrap = styled.div`
   justify-content: space-between;
   align-items: center;
   /* background-color: #fafafa; */
-  /* background-image: ; */
+  background-image: ${(props) =>
+    `linear-gradient(180deg, rgba(250, 250, 250, 0) 80%, #000000 110%),url("/images/${props.bgImage}")`};
 `;
 
 const ItemText = styled.div`
@@ -63,7 +68,7 @@ const LeftButton = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 100px;
-  opacity: 0.85;
+  /* opacity: 0.85; */
   text-transform: uppercase;
   font-size: 12px;
   cursor: pointer;
