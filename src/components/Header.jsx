@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import { selectCars } from "../features/Car/carSlice";
+import { useSelector } from "react-redux";
 
 function Header() {
+  const [navStatus, setNavStatus] = useState(false);
+  const cars = useSelector(selectCars);
+
   return (
     <Container>
       <a>
@@ -10,26 +16,23 @@ function Header() {
       </a>
       <Menu>
         <ul>
-          <li>
-            <a href="#">Model S</a>
-          </li>
-          <li>
-            <a href="#">Model 3</a>
-          </li>
-          <li>
-            <a href="#">Model X</a>
-          </li>
-          <li>
-            <a href="#">Model Y</a>
-          </li>
+          {cars &&
+            cars.map((car, index) => (
+              <li key={index}>
+                <a href="#">{car}</a>
+              </li>
+            ))}
         </ul>
       </Menu>
       <RightMenu>
         <a href="#">Shop</a>
         <a href="#">Tesla Account</a>
-        <CustomMenu />
+        <CustomMenu onClick={() => setNavStatus(true)} />
       </RightMenu>
-      <BurgerNav>
+      <BurgerNav show={navStatus}>
+        <CloseWrapper>
+          <CustomClose onClick={() => setNavStatus(false)} />
+        </CloseWrapper>
         <li>
           <a href="#">Existing Inventory</a>
         </li>
@@ -99,16 +102,28 @@ const BurgerNav = styled.div`
   top: 0;
   bottom: 0;
   right: 0;
-  background-color: #eee;
+  background-color: #ffffff;
   width: 300px;
   z-index: 100;
   padding: 20px;
   text-align: start;
+  transform: ${(props) => (props.show ? "translateX(0)" : "translate(100%)")};
+  transition: 0.3s;
   li {
-    padding: 0;
+    padding: 15px 0;
     display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   }
   a {
-    font-weight: 500;
+    font-weight: 600;
   }
+`;
+
+const CloseWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const CustomClose = styled(CloseIcon)`
+  cursor: pointer;
 `;
